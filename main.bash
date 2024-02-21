@@ -85,6 +85,10 @@ main() {
     echo Starting Check
     dlist1=()
     # reads all the files in npm and gets the domains out of them then formats and puts them in the array
+    if "$RSYNC_NPM"; then
+        echo geting npm proxy files
+        rsync -ave ssh --delete root@$IP:/data/nginx/proxy_host/* /app/npm/
+    fi
     for file in npm/*; do dlist1+=("$(grep "server_name" "$file" | sed "s/  server_name //; s/;//")"); done
     echo Found domains from npm
     echo "this  - last"
